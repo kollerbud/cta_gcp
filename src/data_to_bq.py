@@ -15,7 +15,7 @@ class StoreToDB:
         contains all database operation
         may expand to cloud db later
     '''
-    credentials = service_account.Credentials.from_service_account_file(f'/home/koller/projects/{os.getenv("cred_file")}')
+    credentials = service_account.Credentials.from_service_account_file(f'{os.getenv("cred_file")}')
     
     def __init__(self) -> None:
         
