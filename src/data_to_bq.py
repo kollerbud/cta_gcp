@@ -3,7 +3,7 @@ import google
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from dotenv import load_dotenv
-from typing import List, Dict
+from typing import List
 from cta_api import TrainStop
 
 
@@ -15,13 +15,22 @@ class StoreToDB:
         contains all database operation
         may expand to cloud db later
     '''
-    credentials = service_account.Credentials.from_service_account_file(f'{os.getenv("cred_file")}')
     
     def __init__(self) -> None:
         
-        self.client = bigquery.Client(credentials=self.credentials)
         self.project_name = os.getenv('project_name')
         self.dataset_name = os.getenv('dataset_name')
+        self.creds()
+        
+    def creds(self):
+        'resolve credential issues while upload to cloud run'
+        try:
+            credentials = service_account.Credentials.from_service_account_file(f'{os.getenv("cred_file")}')
+            self.client = bigquery.Client(credentials=credentials)
+            
+        except google.auth.exceptions.DefaultCredentialsError:
+            self.client = bigquery.Client()
+            
     
     def create_table(self):
 
@@ -68,13 +77,6 @@ class StoreToDB:
         else:
             print(f'encounter error {errors}')
 
-    
-def main():
-    _data = TrainStop(method='blueline').method_response()
-    
-    y = StoreToDB().upload_data(data=_data)
-    return y
-
 
 if __name__ == '__main__':
-    print(main())
+    None
