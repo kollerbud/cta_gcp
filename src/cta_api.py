@@ -34,13 +34,14 @@ class TrainStop:
             return data in json format
         '''
         apiKey = os.getenv('api_key')
+        resp = None
         
         if self.method=='arrival':
             resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?'\
                                 f'key={apiKey}'\
                                 f'&max=10&mapid={self.stationID}&outputType=JSON',
                                 )
-            return resp.json()
+
         
         if self.method=='follow':
 
@@ -48,16 +49,20 @@ class TrainStop:
                                 f'key={apiKey}'\
                                 f'&runnumber={run_num}&outputType=JSON',
                                 )
-            return resp.json()
+
 
         if self.method=='blueline':
             
             resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?'\
                                 f'key={apiKey}&rt=blue&outputType=JSON'
                                 )
-            
-            return resp.json()
+
+        # check invalid api key error
+        if resp.json()['ctatt']['errNm'] =="Invalid API key.":
+    
+            raise ValueError('Invalid API key')
         
+        return resp.json()
     
     def method_response(self) -> List[Dict]:
         
@@ -65,7 +70,7 @@ class TrainStop:
                                  arrT--date/time: when train is expected to arrive/depart
                                  isApp--boolean that train tracker is now declaring "approaching/due"
                                  isDly--boolean flag to indicate whether train is late
-        
+
         '''
         
         data = self.query_api()
@@ -85,10 +90,10 @@ class TrainStop:
 
 def write_to_local(dict_data: List[Dict],
                    write_to=None):
+    
     ''' for option to output a csv file in local disk,
         mostly for testing output purpose
     '''
-    
     # type check
     if type(dict_data) is not list:
         raise TypeError('data is not in list format')
@@ -109,7 +114,8 @@ def write_to_local(dict_data: List[Dict],
 
 def main():
     
-    print(TrainStop(method='blueline').method_response())
+    i = TrainStop(method='blueline').method_response()
+    print(i)
 
 if __name__ == '__main__':
     main()

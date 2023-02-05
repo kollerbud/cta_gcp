@@ -20,16 +20,7 @@ class StoreToDB:
         
         self.project_name = os.getenv('project_name')
         self.dataset_name = os.getenv('dataset_name')
-        self.creds()
-        
-    def creds(self):
-        'resolve credential issues while upload to cloud run'
-        try:
-            credentials = service_account.Credentials.from_service_account_file(f'{os.getenv("cred_file")}')
-            self.client = bigquery.Client(credentials=credentials)
-            
-        except google.auth.exceptions.DefaultCredentialsError:
-            self.client = bigquery.Client()
+        self.client = bigquery.Client()
             
     
     def create_table(self):
@@ -79,4 +70,4 @@ class StoreToDB:
 
 
 if __name__ == '__main__':
-    None
+    StoreToDB().create_table()
