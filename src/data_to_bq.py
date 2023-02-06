@@ -1,10 +1,8 @@
 import os
 import google
 from google.cloud import bigquery
-from google.oauth2 import service_account
 from dotenv import load_dotenv
 from typing import List
-from cta_api import TrainStop
 
 
 load_dotenv()
