@@ -10,3 +10,6 @@ run pip install -r requirements.txt
 COPY ./src ./src
 
 CMD [ "python", "src/main.py"]
+
+# for local docker run
+# docker run --env-file=.env

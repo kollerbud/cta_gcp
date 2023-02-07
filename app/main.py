@@ -10,3 +10,6 @@ def bq_data():
     read data from Bigquery
     '''
     client = bigquery.Client()
+    
+    
+    
