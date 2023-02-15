@@ -113,9 +113,7 @@ def write_to_local(dict_data: List[Dict],
         dict_writer.writerows(dict_data)
 
 def main():
-    
-    i = TrainStop(method='blueline').method_response()
-    print(i)
+    return TrainStop(method='blueline').method_response()
 
 if __name__ == '__main__':
-    main()
+    print(main())
