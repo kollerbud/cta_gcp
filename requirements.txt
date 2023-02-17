@@ -1,5 +1,5 @@
-google-cloud-bigquery
-grpcio-status
-pip-chill
-python-dotenv
-streamlit
+google-cloud-bigquery==3.5.0
+grpcio-status==1.51.1
+pip-chill==1.0.1
+python-dotenv==0.21.1
+streamlit==1.9.0

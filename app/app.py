@@ -31,11 +31,13 @@ def ingest_df(station=None) -> pd.DataFrame:
 
 
 list_of_stations = ["O'Hare", 'Rosemont', 'Cumberland', "Harlem (O'Hare Branch)",
-                    "Jefferson Park", "Montrose", 'Irving Park', 'Addison', 'Belmont',
-                    'Logan Square', 'California', "Western (O'Hare Branch)", 'Damen', 'Division',
-                    'Chicago', 'Grand', 'Clark/Lake', 'Washington', 'Monroe', 'Jackson',
-                    'LaSalle', 'Clinton', 'UIC-Halsted', 'Racine', 'Illinois Medical District',
-                    'Western (Forest Park Branch)', 'Kedzie-Homan', 'Pulaski', 'Cicero', 'Austin',
+                    "Jefferson Park", "Montrose", 'Irving Park', 'Addison',
+                    'Belmont', 'Logan Square', 'California',
+                    "Western (O'Hare Branch)", 'Damen', 'Division',
+                    'Chicago', 'Grand', 'Clark/Lake', 'Washington', 'Monroe',
+                    'Jackson', 'LaSalle', 'Clinton', 'UIC-Halsted', 'Racine',
+                    'Illinois Medical District', 'Western (Forest Park Branch)',
+                    'Kedzie-Homan', 'Pulaski', 'Cicero', 'Austin',
                     'Oak Park', 'Harlem (Forest Park Branch)', 'Forest Park'
                     ]
 
@@ -46,7 +48,7 @@ with st.sidebar:
     station_picked = st.selectbox(
         label='Pick a station to check arrival',
         index=13,
-        options= list_of_stations,
+        options=list_of_stations,
         )
 
 df_station = (ingest_df(station=station_picked).
