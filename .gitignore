@@ -14,7 +14,7 @@ yfinance.cache
 share/*
 etc/*
 __pycache__/
-*.csv
+
 *.json
 **/__pycache__/
 __pycache__
