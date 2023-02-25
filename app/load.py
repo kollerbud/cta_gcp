@@ -18,7 +18,7 @@ def load_data():
 
     # query
     query_string = '''
-                    SELECT rn, destNM, nextStaNm, prdt, arrT, lat, lon, resp_time, isApp, isDly
+                    SELECT rn, destNm, nextStaNm, prdt, arrT, lat, lon, resp_time, isApp, isDly
                     FROM line_stops.blue
                     WHERE resp_time BETWEEN @monday and @current
                     ORDER BY resp_time DESC
