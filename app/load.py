@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 load_dotenv()
 
 
-def load_data():
+def load_data(week=1):
     '''
     read data from Bigquery,
     query for week to now data
@@ -16,7 +16,7 @@ def load_data():
     '''
     client = bigquery.Client(project=os.getenv('project_name'))
 
-    # query
+    # query statement
     query_string = '''
                     SELECT rn, destNm, nextStaNm, prdt, arrT, lat, lon, resp_time, isApp, isDly
                     FROM line_stops.blue
@@ -25,8 +25,10 @@ def load_data():
                     ;
                     '''
     # define Monday and Friday of the week
+    
     now = datetime.now()
-    m = now - timedelta(days=now.weekday())
+    back_days = week * 7
+    m = now - timedelta(days=back_days)
     # modify sql query
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
