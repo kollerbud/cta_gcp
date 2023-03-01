@@ -60,7 +60,7 @@ class TrainStop:
                                 )
 
         # check invalid api key error
-        if resp.json()['ctatt']['errNm'] =="Invalid API key.":
+        if resp.json()['ctatt']['errNm'] == "Invalid API key.":
             raise ValueError('Invalid API key')
         return resp.json()
 

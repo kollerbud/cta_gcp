@@ -13,19 +13,19 @@ class StoreToDB:
         contains all database operation
         may expand to cloud db later
     '''
-    
+
     def __init__(self) -> None:
-        
+
         self.project_name = os.getenv('project_name')
         self.dataset_name = os.getenv('dataset_name')
         self.client = bigquery.Client()
-            
-    
+
+
     def create_table(self):
 
-        
+
         table_id = bigquery.Table.from_string(f'{self.project_name}.{self.dataset_name}.blue')
-        
+
         schema = [
             bigquery.SchemaField('rn', 'STRING'),
             bigquery.SchemaField('destSt', 'STRING'),
@@ -45,22 +45,22 @@ class StoreToDB:
             bigquery.SchemaField('resp_time', 'DATETIME')
         ]
         table = bigquery.Table(table_id, schema=schema)
-        
+
         # check if table have already existed
         try:
             table = self.client.create_table(table)
         except google.api_core.exceptions.Conflict:
             print('table already existed')
-        
+
     def upload_data(self, data: List) -> None:
-        
+
         table_id = bigquery.Table.from_string(f'{self.project_name}.'\
                                               f'{self.dataset_name}.blue'
                                               )
         rows_to_insert = data
-        
+
         errors = self.client.insert_rows_json(table_id, rows_to_insert)
-        
+
         if errors == []:
             print('new rows added')
         else:
