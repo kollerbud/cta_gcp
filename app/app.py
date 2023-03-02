@@ -121,6 +121,14 @@ with st.sidebar:
         max_value=3,
     )
 
+    st.markdown('## About')
+    st.write('''There is a limit on Bigquery query, so if data is not showing
+                then we've probably hit the limit.
+            ''')
+    st.markdown('''More updates to come, 
+                    check out my github [@kollerbud](https://github.com/kollerbud)'''
+                )
+
 # morning arrival information
 morning = arrival_freq(weeks=weeks_of_data,
                        station=moring_station_picked)['morning']

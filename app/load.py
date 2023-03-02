@@ -17,8 +17,8 @@ def load_data(week=1):
     '''
     secrets = {}
     for i in ['type', 'project_id', 'private_key_id', 'private_key',
-            'client_email', 'client_id', 'auth_uri', 'token_uri',
-            'auth_provider_x509_cert_url', 'client_x509_cert_url']:
+              'client_email', 'client_id', 'auth_uri', 'token_uri',
+              'auth_provider_x509_cert_url', 'client_x509_cert_url']:
         secrets[i] = os.getenv(i)
 
     cred = service_account.Credentials.from_service_account_info(secrets)
