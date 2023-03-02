@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 import os
-import csv
 import datetime as dt
 from dataclasses import dataclass
 from typing import List, Dict

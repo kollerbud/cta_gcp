@@ -1,6 +1,7 @@
 import os
 import google
 from google.cloud import bigquery
+from google.oauth2 import service_account
 from dotenv import load_dotenv
 from typing import List
 
@@ -18,11 +19,16 @@ class StoreToDB:
 
         self.project_name = os.getenv('project_name')
         self.dataset_name = os.getenv('dataset_name')
-        self.client = bigquery.Client()
+        secrets = {}
+        for i in ['type', 'project_id', 'private_key_id', 'private_key',
+                  'client_email', 'client_id', 'auth_uri', 'token_uri',
+                  'auth_provider_x509_cert_url', 'client_x509_cert_url']:
 
+            secrets[i] = os.getenv(i)
+        cred = service_account.Credentials.from_service_account_info(secrets)
+        self.client = bigquery.Client(credentials=cred)
 
     def create_table(self):
-
 
         table_id = bigquery.Table.from_string(f'{self.project_name}.{self.dataset_name}.blue')
 
