@@ -5,8 +5,20 @@ This project is inspired by the great works of CommutersTakeAction, a Chicago lo
 
 My streamlit app for tracking [Blueline Arrivals](https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/).
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/giswqs/streamlit-template/master?urlpath=proxy/8501/)
+<div>
+    <img alt="Version" src="https://img.shields.io/badge/Project Number-1-orange.svg?cacheSeconds=2592000" />
+</div>
 
 App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 
-![](https://i.imgur.com/xd64mCi.png)
+## Data Pipeline
+
+## Data Pipeline Flowchart
+
+## Tech stack & Cloud Services
+* API: [CTA_API](https://www.transitchicago.com/developers/)
+* Scheduler: [Cloud Scheduler](https://cloud.google.com/scheduler)
+* Serverless Container: [Cloud Run](https://cloud.google.com/run)
+* Data warehouse: [Bigquery](https://cloud.google.com/bigquery)
+* Visualization: [Streamlit](https://docs.streamlit.io/)
+
