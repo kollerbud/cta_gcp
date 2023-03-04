@@ -22,6 +22,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE_NAME: src
+  CRED: ${{ secrets.GCP_CREDENTIALS }}
 
 jobs:
   setup-build-deploy:
@@ -41,7 +42,7 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+        credentials_json: '${{ env.CRED }}'
     # Alternative option - authentication via credentials json
     # - id: 'auth'
     #   uses: 'google-github-actions/auth@v1'
