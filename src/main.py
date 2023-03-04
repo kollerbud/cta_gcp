@@ -6,3 +6,4 @@ def main():
     StoreToDB().upload_data(data=data)
     
 main()
+print('trigger workflow')
