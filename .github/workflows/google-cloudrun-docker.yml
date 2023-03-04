@@ -40,7 +40,7 @@ jobs:
 
     # Configure Workload Identity Federation and generate an access token.
     - id: 'auth'
-      uses: 'google-github-actions/auth@v1'
+      uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ env.CRED }}'
     # Alternative option - authentication via credentials json
