@@ -49,10 +49,11 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_ID: ${{ env.PROJECT_NAME }} # TODO: update Google Cloud project id
+  PROJECT_ID: ${{ secrets.PROJECT_ID }} # TODO: update Google Cloud project id
   GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
   JOB: ${{ secrets.JOB}} # TODO: update Cloud Run job name
   REGISTRY_REPO: ${{ secrets.REGISTRY_REPO }} YOUR_SERVICE_REGION # TODO: update Cloud Artifacts repository
+  
 
 jobs:
   deploy:
