@@ -69,7 +69,7 @@ jobs:
 
 
       # NOTE: Alternative option - authentication via credentials json
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@main
         with:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           project_id: ${{ env.PROJECT_ID }}
