@@ -76,5 +76,5 @@ class StoreToDB:
 
 
 if __name__ == '__main__':
-   print(StoreToDB().client)
+   print(StoreToDB().create_table())
 
