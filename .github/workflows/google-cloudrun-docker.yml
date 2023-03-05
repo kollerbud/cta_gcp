@@ -63,9 +63,10 @@ jobs:
 
     # deploy to cloud run
     - name: Deploy to Cloud Run
-    #https://github.com/google-github-actions/deploy-cloudrun
+    #https://github.com/google-github-actions/deploy-cloudrun (not available for jobs)
+    # pull request: https://github.com/google-github-actions/deploy-cloudrun/pull/422
       id: 'deploy'
-      uses: 'google-github-actions/deploy-cloudrun@v1'
+      uses: 'spencercorwin/deploy-cloudrun@enable-jobs'
       with:
         job: tracker
         gcloud_component: beta
