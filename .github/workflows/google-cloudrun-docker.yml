@@ -21,6 +21,7 @@ on:
 
 env:
 # github actions will wipe secrets when change to private repo
+
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE_NAME: src
   CRED: ${{ secrets.GCP_CREDENTIALS }}
@@ -43,7 +44,8 @@ jobs:
   setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
-    environment: myenvironment
+    # set environment same as in 'settings-environments'
+    environment: keys
 
     # Add "id-token" with the intended permissions.
     permissions:
