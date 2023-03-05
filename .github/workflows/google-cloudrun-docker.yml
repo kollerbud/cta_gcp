@@ -72,13 +72,9 @@ jobs:
         region: us-central1
         image: us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cta/src:github_actions
         env_vars: |
-            api_key=${{ secrets.API_KEY }}
-            project_name=${{ secrets.PROJECT_ID }}
-            dataset_name=${{ vars.DATASET_NAME }}
-            type=${{ secrets.TYPE }}
-            project_id=${{ secrets.PROJECT_ID }}
-            private_key_id=${{ secrets.PRIVATE_KEY_ID }}
-            private_key=${{ secrets.PRIVATE_KEY }}
+            api_key='${{ secrets.API_KEY }}'
+            project_name='${{ secrets.PROJECT_ID }}'
+            dataset_name='${{ vars.DATASET_NAME }}'
 
 
 
