@@ -25,18 +25,6 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE_NAME: src
   CRED: ${{ secrets.GCP_CREDENTIALS }}
-  api_key: '${{ secrets.API_KEY }}'
-  project_name: '${{ secrets.PROJECT_ID }}'
-  dataset_name: '${{ vars.DATASET_NAME }}'
-  type: '${{ secrets.TYPE }}'
-  private_key_id: '${{ secrets.PRIVATE_KEY_ID }}'
-  private_key: '${{ secrets.PRIVATE_KEY }}'
-  client_email: '${{ secrets.CLIENT_EMAIL }}'
-  client_id: '${{ secrets.CLIENT_ID }}'
-  auth_uri: '${{ secrets.AUTH_URI }}'
-  token_uri: '${{ secrets.TOKEN_URI }}'
-  auth_provider_x509_cert_url: '${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}'
-  client_x509_cert_url: '${{ secrets.CLIENT_X509_CERT_URL }}'
 
   
 
@@ -104,25 +92,8 @@ jobs:
             client_x509_cert_url=${{ secrets.CLIENT_X509_CERT_URL }}
 
 
-#gcloud beta run jobs deploy cta-tracker --image=us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cta/src:github_actions \
-#--quiet \
-#--region=us-central1 \
-#--cpu=1 \
-#--memory=512 \
-#--set-env-vars "api_key=${{ secrets.API_KEY }}" \
-#--set-env-vars "project_name=${{ secrets.PROJECT_ID }}" \
-#--set-env-vars "dataset_name=${{ vars.DATASET_NAME }}" \
-#--set-env-vars "type=${{ secrets.TYPE }}" \
-#--set-env-vars "project_id=${{ secrets.PROJECT_ID }}" \
-#--set-env-vars "private_key_id=${{ secrets.PRIVATE_KEY_ID }}" \
-#--set-env-vars "private_key=${{ secrets.PRIVATE_KEY }}" \
-#--set-env-vars "client_email=${{ secrets.CLIENT_EMAIL }}" \
-#--set-env-vars "client_id=${{ secrets.CLIENT_ID }}" \
-#--set-env-vars "auth_uri=${{ secrets.AUTH_URI }}" \
-#--set-env-vars "token_uri=${{ secrets.TOKEN_URI }}" \
-#--set-env-vars "auth_provider_x509_cert_url=${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}" \
-#--set-env-vars "client_x509_cert_url=${{ secrets.CLIENT_X509_CERT_URL }}"
-      
 
-    
-    # set cloud scheduler for the cloud run job
+
+
+
+

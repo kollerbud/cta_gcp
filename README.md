@@ -21,4 +21,7 @@ App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 * Serverless Container: [Cloud Run](https://cloud.google.com/run)
 * Data warehouse: [Bigquery](https://cloud.google.com/bigquery)
 * Visualization: [Streamlit](https://docs.streamlit.io/)
-
+* CI/CD: Github-Actions/gcloud CLI
+* local deployment:
+    * Container: docker
+    * testing: pytest
