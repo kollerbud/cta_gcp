@@ -25,3 +25,6 @@ App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 * local deployment:
     * Container: docker
     * testing: pytest
+
+## Learning 
+* What I learned during doing this project

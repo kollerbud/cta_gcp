@@ -58,7 +58,7 @@ class StoreToDB:
         try:
             table = self.client.create_table(table)
         except google.api_core.exceptions.Conflict:
-            print('table already existed')
+            raise Exception('table already exists')
 
     def upload_data(self, data: List) -> None:
 

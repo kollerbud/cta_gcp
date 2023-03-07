@@ -54,11 +54,3 @@ def load_data(week=1):
             data_dict[key] += [row[key]]
 
     return dict(data_dict)
-
-
-def main():
-
-    return load_data()
-
-if __name__ == '__main__':
-    print(main())
