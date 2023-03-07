@@ -1,6 +1,6 @@
 import pytest
 import sys
-sys.path.append('/workspaces/cta_gcp')
+sys.path+=['../cta_gcp']
 from src.cta_api import TrainStop
 from src.data_to_bq import StoreToDB
 
