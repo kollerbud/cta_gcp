@@ -19,3 +19,7 @@ def test_bq_table():
     # make sure table already exist when try to create table
     with pytest.raises(Exception):
         StoreToDB().create_table()
+
+
+def test_branch():
+    assert 1==1
