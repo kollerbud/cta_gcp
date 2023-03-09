@@ -1,5 +1,5 @@
 google-cloud-bigquery
-grpcio-status==1.51.1
+grpcio-status
 matplotlib==3.7.0
 pip-chill==1.0.1
 pytest==7.2.2
