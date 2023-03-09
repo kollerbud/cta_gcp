@@ -1,4 +1,4 @@
-google-cloud-bigquery==3.5.0
+google-cloud-bigquery
 grpcio-status==1.51.1
 matplotlib==3.7.0
 pip-chill==1.0.1
