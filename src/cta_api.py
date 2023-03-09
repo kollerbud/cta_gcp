@@ -35,14 +35,14 @@ class TrainStop:
         apiKey = os.getenv('api_key')
         resp = None
 
-        if self.method=='arrival':
+        if self.method == 'arrival':
             resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?'\
                                 f'key={apiKey}'\
                                 f'&max=10&mapid={self.stationID}&outputType=JSON',
                                 timeout=10
                                 )
 
-        if self.method=='follow':
+        if self.method == 'follow':
 
             resp = requests.get(f'http://lapi.transitchicago.com/api/1.0.b/ttfollow.aspx?'\
                                 f'key={apiKey}'\
@@ -50,8 +50,7 @@ class TrainStop:
                                 timeout=10
                                 )
 
-
-        if self.method=='blueline':
+        if self.method == 'blueline':
 
             resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?'\
                                 f'key={apiKey}&rt=blue&outputType=JSON',
@@ -88,23 +87,6 @@ class TrainStop:
         return fields
 
 
-def write_to_local(dict_data: List[Dict],
-                   write_to=None):
-
-    ''' for option to output a csv file in local disk,
-        mostly for testing output purpose
-    '''
-    # type check
-    if isinstance(dict_data) is not list:
-        raise TypeError('data is not in list format')
-
-    # current time
-    curr_time = dt.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-
-
-    if write_to is None:
-        write_to = os.getcwd()+'/example_data/'
-
 def main():
     '''
     main function
@@ -112,7 +94,7 @@ def main():
     return TrainStop(method='blueline').method_response()
 
 if __name__ == '__main__':
-    print(main())
+    print(TrainStop(method=None))
 
 
 '''

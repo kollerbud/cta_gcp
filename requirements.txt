@@ -1,6 +1,7 @@
-google-cloud-bigquery
-grpcio-status
-matplotlib
-pip-chill
-python-dotenv
+google-cloud-bigquery==3.5.0
+grpcio-status==1.51.1
+matplotlib==3.7.0
+pip-chill==1.0.1
+pytest==7.2.2
+python-dotenv==0.21.1
 streamlit==1.18.1
