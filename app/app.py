@@ -10,7 +10,7 @@ pd.options.mode.chained_assignment = None
 
 
 @st.cache_data
-def raw_data(weeks=1) -> pd.DataFrame:
+def raw_data(weeks=3) -> pd.DataFrame:
     '''
     this step is to load data from bigquery
     data should be all arriving trains to stations on Wednesday & Thursday
@@ -34,7 +34,8 @@ def ingest_df(num_weeks, station) -> pd.DataFrame:
                 ]
 
     # return only when the train is approaching station
-    df = df.query('`isApp`=="1" & `nextStaNm`==@station')
+    stop_station = station
+    df = df.query('`isApp`=="1" & `nextStaNm`==@stop_station')
     # re-define destination to NW & W, since not all route
     # goes to the end
     df.loc[:, 'destNm'] = df.loc[:, 'destNm'].map(
@@ -48,7 +49,7 @@ def ingest_df(num_weeks, station) -> pd.DataFrame:
 
 def arrival_freq(**kwargs) -> dict:
     '''
-    rewrite this as a decorator function
+
     '''
     # ingested data
     _df = ingest_df(num_weeks=kwargs['weeks'],

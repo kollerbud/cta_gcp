@@ -94,7 +94,7 @@ def main():
     return TrainStop(method='blueline').method_response()
 
 if __name__ == '__main__':
-    print(TrainStop(method=None))
+    print(TrainStop(method='blueline').method_response())
 
 
 '''
