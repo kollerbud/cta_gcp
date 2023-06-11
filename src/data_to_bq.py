@@ -1,24 +1,38 @@
 import os
 import google
+from dataclasses import dataclass
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from dotenv import load_dotenv
-from typing import List
+from typing import List, ClassVar
+from cta_api import QueryLines
 
 
 load_dotenv()
 
 
-class StoreToDB:
+@dataclass
+class StoreToBQ:
     '''
         contains all database operation
         may expand to cloud db later
     '''
 
-    def __init__(self) -> None:
+    bq_client = None
+    project_name: ClassVar[str] = os.getenv('project_name')
+    dataset_name: ClassVar[str] = os.getenv('dataset_name')
 
-        self.project_name = os.getenv('project_name')
-        self.dataset_name = os.getenv('dataset_name')
+    def __post_init__(self):
+        'check if client secrects are available, if not then use default credentials'
+        if os.getenv('private_key') is None:
+            self.bq_client = bigquery.Client()
+
+        self.bq_client = self._auth()
+
+        return None
+
+    def _auth(self):
+        'authenticate Bigquery'
         secrets = {}
         for i in ['type', 'project_id', 'private_key_id',
                   'client_email', 'client_id', 'auth_uri', 'token_uri',
@@ -26,13 +40,25 @@ class StoreToDB:
 
             secrets[i] = os.getenv(i)
             # need to clean up private_key
-            secrets['private_key'] = os.getenv('private_key').replace('\\n', '\n')
+        secrets['private_key'] = os.getenv('private_key').replace('\\n', '\n')
         cred = service_account.Credentials.from_service_account_info(secrets)
-        self.client = bigquery.Client(credentials=cred)
 
-    def create_table(self):
+        client = bigquery.Client(credentials=cred)
 
-        table_id = bigquery.Table.from_string(f'{self.project_name}.{self.dataset_name}.blue')
+        return client
+
+    def create_table(self, table_name: str):
+
+        # check table names
+        table_name = table_name.lower()
+        if table_name not in ['blue', 'red', 'brown', 'green',
+                              'orange', 'purple', 'pink', 'yellow'
+                              ]:
+            raise KeyError("use table names match CTA's lines")
+
+        table_id = bigquery.Table.from_string(
+                   f'{self.project_name}.{self.dataset_name}.{table_name}'
+                   )
 
         schema = [
             bigquery.SchemaField('rn', 'STRING'),
@@ -44,8 +70,8 @@ class StoreToDB:
             bigquery.SchemaField('nextStaNm', 'STRING'),
             bigquery.SchemaField('prdt', 'DATETIME'),
             bigquery.SchemaField('arrT', 'DATETIME'),
-            bigquery.SchemaField('isApp', 'STRING'), # if use boolean then raw data should be converted
-            bigquery.SchemaField('isDly', 'STRING'), # if use boolean then raw data should be converted
+            bigquery.SchemaField('isApp', 'STRING'),
+            bigquery.SchemaField('isDly', 'STRING'),
             bigquery.SchemaField('flags', 'STRING'),
             bigquery.SchemaField('lat', 'FLOAT'),
             bigquery.SchemaField('lon', 'FLOAT'),
@@ -56,25 +82,31 @@ class StoreToDB:
 
         # check if table have already existed
         try:
-            table = self.client.create_table(table)
+            table = self.bq_client.create_table(table)
         except google.api_core.exceptions.Conflict:
             raise Exception('table already exists')
 
-    def upload_data(self, data: List) -> None:
+    def upload_data(self,
+                    data: List[dict],
+                    table_name: str) -> None:
 
-        table_id = bigquery.Table.from_string(f'{self.project_name}.'\
-                                              f'{self.dataset_name}.blue'
+        table_id = bigquery.Table.from_string(f'{self.project_name}.' +
+                                              f'{self.dataset_name}.' +
+                                              f'{table_name}'
                                               )
+
         rows_to_insert = data
 
-        errors = self.client.insert_rows_json(table_id, rows_to_insert)
+        insert_errors = (self.bq_client
+                         .insert_rows_json(table_id, rows_to_insert)
+                         )
 
-        if errors == []:
+        if insert_errors == []:
             print('new rows added')
         else:
-            print(f'encounter error {errors}')
+            print(f'encounter error {insert_errors}')
 
 
 if __name__ == '__main__':
-   print(StoreToDB().create_table())
-
+    data_to_upload = QueryLines(line='red').api_output()
+    StoreToBQ().upload_data(data=data_to_upload, table_name='red')

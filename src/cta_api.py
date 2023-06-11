@@ -1,9 +1,7 @@
-from __future__ import absolute_import
 import os
-import datetime as dt
-from dataclasses import dataclass
-from typing import List, Dict
 import requests
+from typing import List, Dict, ClassVar
+from dataclasses import dataclass
 from dotenv import load_dotenv
 
 
@@ -11,58 +9,50 @@ load_dotenv()
 
 
 @dataclass
-class TrainStop:
+class QueryLines:
     '''
         station ID: number associate with train station
         method: arrival/follow;
                 arrival--check train arrival at specific station,
                 follow--info about a specific train
 
+    "L" routes (rapid transit train services) are identified as follows:
+    • Red = Red Line (Howard-95th/Dan Ryan service)
+    • Blue = Blue Line (O'Hare-Forest Park service)
+    • Brn = Brown Line (Kimball-Loop service)
+    • G = Green Line (Harlem/Lake-Ashland/63rd-Cottage Grove service)
+    • Org = Orange Line (Midway-Loop service)
+    • P = Purple Line (Linden-Howard shuttle service)
+    • Pink = Pink Line (54th/Cermak-Loop service)
+    • Y = Yellow Line (Skokie-Howard [Skokie Swift] shuttle service)
     '''
-    stationID: str = '40320'
-    method: str = 'arrival'
+    api_key: ClassVar[str] = os.getenv('api_key')
+    line: str = 'blue'
 
     def __post_init__(self):
-        # remind myself to use the right keywords
-        if self.method not in ['arrival', 'follow', 'blueline']:
-            raise ValueError('use "arrival", "follow", "blueline"')
+        '"line" keyword check'
+        self.line = self.line.lower()
+        if self.line not in ['blue', 'red', 'brn', 'g', 'org', 'p', 'pink', 'y']:
+            raise ValueError('Not a correct CTA L line')
 
-    def query_api(self, run_num=None):
+        return None
+
+    def query_api(self):
         ''' query the api by either target station info or
             follow trains
             return data in json format
         '''
-        apiKey = os.getenv('api_key')
-        resp = None
-
-        if self.method == 'arrival':
-            resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?'\
-                                f'key={apiKey}'\
-                                f'&max=10&mapid={self.stationID}&outputType=JSON',
-                                timeout=10
-                                )
-
-        if self.method == 'follow':
-
-            resp = requests.get(f'http://lapi.transitchicago.com/api/1.0.b/ttfollow.aspx?'\
-                                f'key={apiKey}'\
-                                f'&runnumber={run_num}&outputType=JSON',
-                                timeout=10
-                                )
-
-        if self.method == 'blueline':
-
-            resp = requests.get(f'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?'\
-                                f'key={apiKey}&rt=blue&outputType=JSON',
-                                timeout=10
-                                )
-
+        resp = requests.get(
+            'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?' +
+            f'key={self.api_key}&rt={self.line}&outputType=JSON',
+            timeout=10
+            )
         # check invalid api key error
         if resp.json()['ctatt']['errNm'] == "Invalid API key.":
             raise ValueError('Invalid API key')
         return resp.json()
 
-    def method_response(self) -> List[Dict]:
+    def api_output(self) -> List[Dict]:
 
         ''' fields of interests:
             prdt--date/time: when internal prediction was generated
@@ -72,13 +62,14 @@ class TrainStop:
 
         '''
 
-        data = self.query_api()
+        api_response = self.query_api()
 
         # time when response was received
-        current_Time = data['ctatt']['tmst']
+        current_Time = api_response['ctatt']['tmst']
 
+        # unpack API response
         fields = []
-        for pred in data['ctatt']['route'][0]['train']:
+        for pred in api_response['ctatt']['route'][0]['train']:
             # nested json data, locate all active trains
             # on the blue line
             pred['resp_time'] = current_Time
@@ -87,14 +78,8 @@ class TrainStop:
         return fields
 
 
-def main():
-    '''
-    main function
-    '''
-    return TrainStop(method='blueline').method_response()
-
 if __name__ == '__main__':
-    print(TrainStop(method='blueline').method_response())
+    None
 
 
 '''

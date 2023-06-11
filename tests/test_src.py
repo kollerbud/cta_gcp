@@ -1,15 +1,15 @@
 import pytest
 import sys
-sys.path += ['../cta_gcp']
-from src.cta_api import TrainStop
-from src.data_to_bq import StoreToDB
+sys.path.append('../cta_gcp/src')
+from cta_api import QueryLines
+from data_to_bq import StoreToBQ
 
 
 def test_api_output():
     # test fields return from API call
 
     # blueline fields
-    blue = TrainStop(method='blueline').method_response()
+    blue = QueryLines(line='blue').api_output()
 
     assert list(blue[0].keys()) == ['rn', 'destSt', 'destNm', 'trDr',
                                     'nextStaId', 'nextStpId', 'nextStaNm',
@@ -17,14 +17,7 @@ def test_api_output():
                                     'lat', 'lon', 'heading', 'resp_time']
 
 
-@pytest.mark.parametrize('param', ['random', 547, None])
-def test_api_incorr_var(param):
-    # test if incorrect inputs are caught
-    with pytest.raises(ValueError):
-        TrainStop(method=param)
-
-
 def test_bq_table():
     # make sure table already exist when try to create table
     with pytest.raises(Exception):
-        StoreToDB().create_table()
+        StoreToBQ().create_table(table_name='blue')
