@@ -14,6 +14,8 @@ App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 ## Data Pipeline
 
 ## Data Pipeline Flowchart
+![pipe_image](![pipe_image](https://github.com/kollerbud/cta_gcp/blob/master/img/cta-2023-11-16-2104.png)
+
 
 ## Tech stack & Cloud Services
 * API: [CTA_API](https://www.transitchicago.com/developers/)
@@ -28,3 +30,8 @@ App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 
 ## Learning 
 * What I learned during doing this project
+
+## To Do
+* analytics ideas:
+    * Calculate time between arrivals
+    * time series models based on between arrivals
