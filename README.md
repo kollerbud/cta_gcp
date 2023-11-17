@@ -14,7 +14,7 @@ App URL: <https://kollerbud-cta-gcp-appapp-95pnfi.streamlit.app/>
 ## Data Pipeline
 
 ## Data Pipeline Flowchart
-![pipe_image](![pipe_image](https://github.com/kollerbud/cta_gcp/blob/master/img/cta-2023-11-16-2104.png)
+![pipe_image](https://github.com/kollerbud/cta_gcp/blob/master/img/cta-2023-11-16-2104.png)
 
 
 ## Tech stack & Cloud Services
